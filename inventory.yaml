@@ -1,0 +1,50 @@
+---
+
+all:
+  children:
+    routers:
+      hosts:
+        R1:
+          ansible_host: 10.1.0.76
+    
+    switches:
+      hosts:
+        CSW-1:
+          ansible_host: 10.1.0.77
+        CSW-2:
+          ansible_host: 10.1.0.78
+        
+        DSW-A1:
+          ansible_host: 10.1.0.79
+        DSW-A2:
+          ansible_host: 10.1.0.80
+        DSW-B1:
+          ansible_host: 10.1.0.81
+        DSW-B2:
+          ansible_host: 10.1.0.82
+
+        ASW-A1:
+          ansible_host: 10.1.0.4
+        ASW-A2:
+          ansible_host: 10.1.0.5
+        ASW-A3:
+          ansible_host: 10.1.0.6
+
+        ASW-B1:
+          ansible_host: 10.1.0.20
+        ASW-B2:
+          ansible_host: 10.1.0.21
+        ASW-B3:
+          ansible_host: 10.1.0.22
+
+  vars:
+    ansible_connection: "network_cli"
+    connection: local
+    ansible_user: "admin"
+    ansible_password: "cisco"
+    ansible_network_os: "ios"
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_become_password: "cicso"
+    ssh_type: paramiko
+
