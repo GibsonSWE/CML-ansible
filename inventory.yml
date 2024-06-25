@@ -2,7 +2,14 @@
 
 all:
   vars:
-
+    ansible_connection: network_cli
+    ansible_network_os: ios
+    ssh_type: paramiko
+    ansible_user: "ansible"
+    ansible_password: "{{ lookup('env', 'ANSIBLE_PASSWORD') }}"
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_become_password: "{{ lookup('env', 'ANSIBLE_BECOME_PASS') }}"
   children:
     routers:
       hosts:
