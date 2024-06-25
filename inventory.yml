@@ -1,6 +1,8 @@
 ---
 
 all:
+  vars:
+
   children:
     routers:
       hosts:
@@ -36,15 +38,4 @@ all:
           ansible_host: 10.1.0.21
         ASW-B3:
           ansible_host: 10.1.0.22
-
-  vars:
-    ansible_connection: "network_cli"
-    connection: local
-    ansible_user: "admin"
-    ansible_password: "cisco"
-    ansible_network_os: "ios"
-    ansible_become: yes
-    ansible_become_method: enable
-    ansible_become_password: "cicso"
-    ssh_type: paramiko
 
