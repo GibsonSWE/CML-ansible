@@ -1,0 +1,29 @@
+---
+
+- name: Remove User
+  vars:
+    user_to_be_removed: test
+
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_become_password: "{{ lookup('env', 'ANSIBLE_BECOME_PASS') }}"
+    
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: Removing user {{ user_to_be_removed }}
+      cisco.ios.ios_user:
+        aggregate:
+          - name: "{{ user_to_be_removed }}"
+        state: absent
+
+    - name: Saving Running ios_config
+      ios_config:
+        save_when: modified
+
+    - name: Showing User Config
+      ios_command:
+        commands: show start | inc user
+      register: output
+    - debug:
+        var: output.stdout_lines
