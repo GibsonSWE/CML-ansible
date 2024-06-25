@@ -1,0 +1,10 @@
+---
+
+- name: Test connection to hosts
+  hosts: all
+  gather_facts: False
+  vars:
+    ansible_user: "admin"
+  tasks:
+  - name: Testing connection to hosts
+    ping:
