@@ -1,0 +1,28 @@
+---
+
+- name: Apply FQDN to hostname
+  vars:
+    {}
+  gather_facts: false
+  hosts: all
+  # serial: 1
+  tasks:
+    - name: Gathering Current Hostname
+      cisco.ios.ios_hostname:
+        state: gathered
+      register: output
+
+    - name: Constructing New Hostname
+      ansible.builtin.set_fact:
+        new_hostname: "{{ output.gathered.hostname }}.cml.gibnet.se"
+
+    - name: Checking if hostname needs to be updated
+      ansible.builtin.set_fact:
+        hostname_needs_update: "{{ (not output.gathered.hostname.endswith('.cml.gibnet.se')) }}"
+
+    - name: Applying New Hostname {{ new_hostname }}
+      cisco.ios.ios_hostname:
+        config:
+          hostname: "{{ new_hostname }}"
+        state: replaced
+      when: hostname_needs_update

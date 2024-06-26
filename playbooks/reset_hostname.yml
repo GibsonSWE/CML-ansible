@@ -1,0 +1,22 @@
+---
+
+- name: Reset Hostname
+  vars:
+    {}
+  gather_facts: false
+  hosts: all
+  # serial: 1
+  tasks:
+    - name: Gathering Current Hostname
+      cisco.ios.ios_hostname:
+        state: gathered
+      register: output
+
+    - name: Stripping FQDN From Hostname
+      ansible.builtin.set_fact:
+        stripped_hostname: "{{ output.gathered.hostname.split('.')[0] }}"
+
+    - name: Applying New Hostname {{ stripped_hostname }}
+      cisco.ios.ios_hostname:
+        config:
+          hostname: "{{ stripped_hostname }}"
