@@ -1,0 +1,17 @@
+---
+
+- name: Set MOTD banner
+  hosts: all
+  gather_facts: False
+  vars:
+
+  tasks:
+  - name: Setting MOTD banner
+    cisco.ios.ios_banner:
+      banner: motd
+      text: "{{ lookup('file', '~/ansible/motd_banner.cfg') }}"
+      state: present
+
+  - name: Saving Running ios_config
+    ios_config:
+      save_when: modified
